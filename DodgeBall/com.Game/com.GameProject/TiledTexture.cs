@@ -47,11 +47,13 @@ namespace com.GameProject
             if (trans2D != null)
             {
                 rect = trans2D.Rectangle;
-                texture.Width = (int)(rect.Width / X_Repeat);
-                texture.Height = (int)(rect.Height / Y_Repeat);
-                for (float x = 0; x < rect.Width; x += texture.Width)
+                var supposedTextureWidth = (rect.Width / X_Repeat);
+                var supposedTextureHeight = (rect.Height / Y_Repeat);
+                var scaleX = (rect.Width / X_Repeat) / texture.Width;
+                var scaleY = (rect.Height / Y_Repeat) / texture.Height;
+                for (float x = 0; x < rect.Width; x += supposedTextureWidth)
                 {
-                    for (float y = 0; y < rect.Height; y += texture.Height)
+                    for (float y = 0; y < rect.Height; y += supposedTextureHeight)
                     {
                         point = rotate(new FloatingPoint(x, y), trans2D.Rotation,
                             new Vector2(trans2D.Origin.X * rect.Width, trans2D.Origin.Y * rect.Height));
@@ -62,7 +64,7 @@ namespace com.GameProject
                             Color.White,
                             trans2D.Rotation,
                             new Vector2(0, 0),
-                            new Vector2(1, 1),
+                            new Vector2(scaleX, scaleY),
                             trans2D.Effect,
                             0);
                     }
